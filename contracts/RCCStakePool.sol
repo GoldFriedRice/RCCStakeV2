@@ -227,9 +227,9 @@ contract RCCStakePool is
         }
         if (pendingWithdrawAmount > 0) {
             if (stTokenAddress == address(0x0)) {
-                _safeNativeCurrencyWithdraw(msg.sender, pendingWithdrawAmount);
+                _safeNativeCurrencyWithdraw(_user, pendingWithdrawAmount);
             } else {
-                IERC20(stTokenAddress).safeTransfer(msg.sender, pendingWithdrawAmount);
+                IERC20(stTokenAddress).safeTransfer(_user, pendingWithdrawAmount);
             }
         }
         emit Withdraw(_user, pendingWithdrawAmount);

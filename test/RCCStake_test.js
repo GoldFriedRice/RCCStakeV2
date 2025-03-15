@@ -144,10 +144,8 @@ describe("RCCStake test", () => {
         expect(await poolContract.stakingBalance(testAccount.address)).to.equal(0);
         expect(await poolContract.pendingWithdraw(testAccount.address)).to.equal(amount);
 
-        await expect(testRCCStake.connect(testAccount).withdraw(ethPoolAddress, testAccount.address)).to.emit(poolContract, "Withdraw").withArgs(testAccount.address, amount);
-
+        await expect(await testRCCStake.connect(testAccount).withdraw(ethPoolAddress, testAccount.address)).to.changeEtherBalances([testAccount, poolContract], [amount, -amount]);
         expect(await poolContract.pendingWithdraw(testAccount.address)).to.equal(0);
-        expect(afterBalance - beforeBalance).to.equal(amount);
     });
 
     it("token withdraw", async () => {
